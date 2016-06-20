@@ -7,7 +7,7 @@
     "registry": "github",
     "jspmPackage": true,
     "main": "aurelia-dynamic-parts",
-    "format": "amdr",
+    "format": "amd",
     "directories": {
         "dist": "dist"
     },
