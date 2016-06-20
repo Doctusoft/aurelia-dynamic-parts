@@ -4,6 +4,13 @@
   "dependencies": {},
   "private": false,
   "jspm": {
+    "registry": "github",
+    "jspmPackage": true,
+    "main": "aurelia-dynamic-parts",
+    "format": "amd",
+    "directories": {
+        "dist": "dist"
+    },
     "dependencies": {
       "Doctusoft/typescript-rtti": "github:Doctusoft/typescript-rtti@master",
       "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.2.1",
