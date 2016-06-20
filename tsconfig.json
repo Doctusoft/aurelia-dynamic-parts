@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "system",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"suppressImplicitAnyIndexErrors": true,
+        "outDir": "dist"
+	},
+	"filesGlob": [
+		"./src/**/*.ts",
+		"./jspm_packages/**/*.d.ts",
+        "./typings/**/*.d.ts",
+        "./custom-typings/**/*.d.ts"
+	]
+}
