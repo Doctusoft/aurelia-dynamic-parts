@@ -1,13 +1,13 @@
 {
 	"compilerOptions": {
 		"target": "ES5",
-		"module": "system",
+		"module": "amd",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"suppressImplicitAnyIndexErrors": true,
-        "outDir": "dist"
+        "outFile": "dist/aurelia-dynamic-parts.js"
 	},
 	"filesGlob": [
 		"./src/**/*.ts",
