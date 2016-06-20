@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define("dynamic-panel/dynamic-panel", ["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
+define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_1) {
     "use strict";
     var DynamicPanel = (function () {
         function DynamicPanel() {
@@ -42,9 +42,6 @@ define("dynamic-panel/dynamic-panel", ["require", "exports", 'aurelia-framework'
         return DynamicPanel;
     }());
     exports.DynamicPanel = DynamicPanel;
-});
-define("dynamic-panel/dynamic-panel-builder", ["require", "exports"], function (require, exports) {
-    "use strict";
     var PanelDefinitionBuilder = (function () {
         function PanelDefinitionBuilder() {
             this.tableDefinition = { items: [] };
@@ -62,9 +59,6 @@ define("dynamic-panel/dynamic-panel-builder", ["require", "exports"], function (
         return PanelDefinitionBuilder;
     }());
     exports.PanelDefinitionBuilder = PanelDefinitionBuilder;
-});
-define("dynamic-table/dynamic-table", ["require", "exports", 'aurelia-framework'], function (require, exports, aurelia_framework_2) {
-    "use strict";
     var DynamicTable = (function () {
         function DynamicTable() {
         }
@@ -80,26 +74,23 @@ define("dynamic-table/dynamic-table", ["require", "exports", 'aurelia-framework'
             });
             template += '</tr>';
             template += '</tbody></table></template>';
-            this.viewStrategy = new aurelia_framework_2.InlineViewStrategy(template);
+            this.viewStrategy = new aurelia_framework_1.InlineViewStrategy(template);
         };
         __decorate([
-            aurelia_framework_2.bindable, 
+            aurelia_framework_1.bindable, 
             __metadata('design:type', Object)
         ], DynamicTable.prototype, "tableDefinition", void 0);
         __decorate([
-            aurelia_framework_2.bindable, 
+            aurelia_framework_1.bindable, 
             __metadata('design:type', Array)
         ], DynamicTable.prototype, "tableData", void 0);
         DynamicTable = __decorate([
-            aurelia_framework_2.inlineView('<template><compose view.bind="viewStrategy"></compose></template>'), 
+            aurelia_framework_1.inlineView('<template><compose view.bind="viewStrategy"></compose></template>'), 
             __metadata('design:paramtypes', [])
         ], DynamicTable);
         return DynamicTable;
     }());
     exports.DynamicTable = DynamicTable;
-});
-define("dynamic-table/dynamic-table-builder", ["require", "exports"], function (require, exports) {
-    "use strict";
     var TableDefinitionBuilder = (function () {
         function TableDefinitionBuilder() {
             this.tableDefinition = { columns: [] };
