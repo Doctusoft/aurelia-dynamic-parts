@@ -34,6 +34,7 @@ declare module "aurelia-dynamic-parts" {
         viewStrategy: ViewStrategy;
         tableDefinition: TableDefinition;
         tableData: any[];
+        outerController: any;
         bind(bindingContext: any, overrideContext: any): void;
     }
     export class TableDefinitionBuilder {

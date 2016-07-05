@@ -79,6 +79,7 @@ export class DynamicTable {
 
 	@bindable tableDefinition: TableDefinition;
 	@bindable tableData: any [];
+    @bindable outerController: any;
 
 	bind(bindingContext: any, overrideContext: any) {
 		let template: string = '<template><table><thead>';

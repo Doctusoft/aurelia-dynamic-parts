@@ -108,6 +108,10 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             aurelia_framework_1.bindable, 
             __metadata('design:type', Array)
         ], DynamicTable.prototype, "tableData", void 0);
+        __decorate([
+            aurelia_framework_1.bindable, 
+            __metadata('design:type', Object)
+        ], DynamicTable.prototype, "outerController", void 0);
         DynamicTable = __decorate([
             aurelia_framework_1.inlineView('<template><compose view.bind="viewStrategy"></compose></template>'), 
             __metadata('design:paramtypes', [])
