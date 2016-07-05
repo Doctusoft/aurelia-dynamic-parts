@@ -13,6 +13,7 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
         function DynamicPanel() {
         }
         DynamicPanel.prototype.bind = function (bindingContext, overrideContext) {
+            var _this = this;
             var template = '<template><div class="dynamic-panel">';
             if (this.panelDefinition.caption) {
                 template += '<div class="dynamic-panel-caption">' + this.panelDefinition.caption + '</div>';
@@ -20,9 +21,17 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             this.panelDefinition.items.forEach(function (item) {
                 template +=
                     '<div class="dynamic-panel-item">' +
-                        '  <div class="item-label">' + item.caption + '</div>' +
-                        '  <div class="item-value">${panelData.' + item.propertyName + '}</div>' +
-                        '</div>';
+                        '  <div class="item-label">' + item.caption + '</div>';
+                if (item.propertyName) {
+                    template += '  <div class="item-value">${panelData.' + item.propertyName + '}</div>';
+                }
+                else if (item.template) {
+                    template += '  <div class="item-value">' + item.template + '</div>';
+                }
+                else {
+                    throw { error: 'Please define rendering for this item', item: item, panelDefinition: _this.panelDefinition };
+                }
+                template += '</div>';
             });
             template += '</div></template>';
             this.viewStrategy = new aurelia_framework_1.InlineViewStrategy(template);
@@ -53,6 +62,13 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             });
             return this;
         };
+        PanelDefinitionBuilder.prototype.withTemplateItem = function (template, caption) {
+            this.tableDefinition.items.push({
+                caption: caption,
+                template: template
+            });
+            return this;
+        };
         PanelDefinitionBuilder.prototype.build = function () {
             return this.tableDefinition;
         };
@@ -63,6 +79,7 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
         function DynamicTable() {
         }
         DynamicTable.prototype.bind = function (bindingContext, overrideContext) {
+            var _this = this;
             var template = '<template><table><thead>';
             this.tableDefinition.columns.forEach(function (column) {
                 template += '<th>' + column.caption + '</th>';
@@ -70,7 +87,14 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             template += '</thead><tbody>';
             template += '<tr repeat.for="item of tableData">';
             this.tableDefinition.columns.forEach(function (column) {
-                template += '<td>${item.' + column.propertyName + '}</td>';
+                if (column.propertyName) {
+                    template += '<td>${item.' + column.propertyName + '}</td>';
+                }
+                else if (column.template) {
+                    template += '<td>' + column.template + '</td>';
+                }
+                else
+                    throw { error: 'Please define rendering for this column', column: column, tableDefinition: _this.tableDefinition };
             });
             template += '</tr>';
             template += '</tbody></table></template>';
@@ -99,6 +123,13 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             this.tableDefinition.columns.push({
                 caption: caption,
                 propertyName: propertyDescriptor.name
+            });
+            return this;
+        };
+        TableDefinitionBuilder.prototype.withTemplateColumn = function (template, caption) {
+            this.tableDefinition.columns.push({
+                caption: caption,
+                template: template,
             });
             return this;
         };
