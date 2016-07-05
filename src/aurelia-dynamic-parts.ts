@@ -18,6 +18,7 @@ export class DynamicPanel {
 
     @bindable panelDefinition: PanelDefinition;
     @bindable panelData: any;
+    @bindable outerController: any;
 
     bind(bindingContext: any, overrideContext: any) {
         let template: string = '<template><div class="dynamic-panel">';

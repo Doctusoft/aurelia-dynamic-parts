@@ -44,6 +44,10 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             aurelia_framework_1.bindable, 
             __metadata('design:type', Object)
         ], DynamicPanel.prototype, "panelData", void 0);
+        __decorate([
+            aurelia_framework_1.bindable, 
+            __metadata('design:type', Object)
+        ], DynamicPanel.prototype, "outerController", void 0);
         DynamicPanel = __decorate([
             aurelia_framework_1.inlineView('<template><compose view.bind="viewStrategy"></compose></template>'), 
             __metadata('design:paramtypes', [])

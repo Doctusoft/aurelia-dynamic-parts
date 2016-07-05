@@ -14,6 +14,7 @@ declare module "aurelia-dynamic-parts" {
         viewStrategy: ViewStrategy;
         panelDefinition: PanelDefinition;
         panelData: any;
+        outerController: any;
         bind(bindingContext: any, overrideContext: any): void;
     }
     export class PanelDefinitionBuilder {
