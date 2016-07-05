@@ -51,6 +51,13 @@ export class PanelDefinitionBuilder {
 		});
 		return this;
 	}
+	public withTemplateItem(template: string, caption: string) {
+		this.tableDefinition.items.push({
+			caption: caption,
+			template: template
+		});
+		return this;
+	}
 	public build(): PanelDefinition {
 		return this.tableDefinition;
 	}
@@ -99,6 +106,13 @@ export class TableDefinitionBuilder {
 		this.tableDefinition.columns.push({
 			caption: caption,
 			propertyName: propertyDescriptor.name
+		});
+		return this;
+	}
+	public withTemplateColumn(template: string, caption: string) {
+		this.tableDefinition.columns.push({
+			caption: caption,
+			template: template,
 		});
 		return this;
 	}
