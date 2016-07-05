@@ -9,6 +9,7 @@ export interface PanelDefinition {
 export interface PanelItemDefinition {
     caption: string;
     propertyName?: string;
+    template?: string;
 }
 
 @inlineView('<template><compose view.bind="viewStrategy"></compose></template>')
@@ -26,9 +27,15 @@ export class DynamicPanel {
         this.panelDefinition.items.forEach(item => {
             template +=
                 '<div class="dynamic-panel-item">' +
-                '  <div class="item-label">' + item.caption + '</div>' +
-                '  <div class="item-value">${panelData.' + item.propertyName + '}</div>' +
-                '</div>';
+                '  <div class="item-label">' + item.caption + '</div>';
+            if (item.propertyName) {
+                template += '  <div class="item-value">${panelData.' + item.propertyName + '}</div>';
+            } else if (item.template) {
+                template += '  <div class="item-value">' + item.template + '</div>';
+            } else {
+                throw {error: 'Please define rendering for this item', item: item, panelDefinition: this.panelDefinition};
+            }
+            template += '</div>';
         });
         template += '</div></template>';
         this.viewStrategy = new InlineViewStrategy(template);
@@ -56,6 +63,7 @@ export interface TableDefinition {
 export interface ColumnDefinition {
 	caption: string;
 	propertyName?: string;
+    template?: string;
 }
 
 @inlineView('<template><compose view.bind="viewStrategy"></compose></template>')
@@ -73,7 +81,11 @@ export class DynamicTable {
 		template += '</thead><tbody>';
 		template += '<tr repeat.for="item of tableData">';
 		this.tableDefinition.columns.forEach(column => {
-			template += '<td>${item.' + column.propertyName + '}</td>';
+            if (column.propertyName) {
+			    template += '<td>${item.' + column.propertyName + '}</td>';
+            } else if (column.template) {
+                template += '<td>' + column.template + '</td>';
+            } else throw {error: 'Please define rendering for this column', column: column, tableDefinition: this.tableDefinition };
 		});
 		template += '</tr>';
 		template += '</tbody></table></template>';
