@@ -25,6 +25,7 @@ declare module "aurelia-dynamic-parts" {
     }
     export interface TableDefinition {
         columns: ColumnDefinition[];
+        rowStyleTemplate?: string;
     }
     export interface ColumnDefinition {
         caption: string;
