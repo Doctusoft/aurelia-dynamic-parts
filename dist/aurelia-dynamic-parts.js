@@ -105,7 +105,7 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
                     throw { error: 'Please define rendering for this column', column: column, tableDefinition: _this.tableDefinition };
             });
             template += '</tr>';
-            template += '</tbody><tfoot slot="tfoot"></tfoot></table></template>';
+            template += '</tbody><slot name="tfoot"></slot></table></template>';
             this.viewStrategy = new aurelia_framework_1.InlineViewStrategy(template);
         };
         __decorate([

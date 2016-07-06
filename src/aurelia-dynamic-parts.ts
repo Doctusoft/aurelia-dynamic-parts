@@ -102,7 +102,7 @@ export class DynamicTable {
             } else throw {error: 'Please define rendering for this column', column: column, tableDefinition: this.tableDefinition };
 		});
 		template += '</tr>';
-		template += '</tbody><tfoot slot="tfoot"></tfoot></table></template>';
+		template += '</tbody><slot name="tfoot"></slot></table></template>';
 		this.viewStrategy = new InlineViewStrategy(template);
 	}
 }
