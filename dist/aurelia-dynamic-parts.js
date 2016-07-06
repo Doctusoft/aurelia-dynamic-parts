@@ -90,8 +90,8 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             });
             template += '</thead><tbody>';
             template += '<tr repeat.for="item of tableData" ';
-            if (this.tableDefinition.rowStyleTemplate) {
-                template += ' class="${' + this.tableDefinition.rowStyleTemplate + '}" ';
+            if (this.tableDefinition.rowStyleClassTemplate) {
+                template += ' class="${' + this.tableDefinition.rowStyleClassTemplate + '}" ';
             }
             template += '>';
             this.tableDefinition.columns.forEach(function (column) {

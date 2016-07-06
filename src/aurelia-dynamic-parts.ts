@@ -66,7 +66,7 @@ export class PanelDefinitionBuilder {
 
 export interface TableDefinition {
 	columns: ColumnDefinition[];
-    rowStyleTemplate?: string;
+    rowStyleClassTemplate?: string;
 }
 
 export interface ColumnDefinition {
@@ -90,8 +90,8 @@ export class DynamicTable {
 		});
 		template += '</thead><tbody>';
 		template += '<tr repeat.for="item of tableData" '
-        if (this.tableDefinition.rowStyleTemplate) {
-            template += ' class="${' + this.tableDefinition.rowStyleTemplate + '}" ';
+        if (this.tableDefinition.rowStyleClassTemplate) {
+            template += ' class="${' + this.tableDefinition.rowStyleClassTemplate + '}" ';
         }
         template += '>';
 		this.tableDefinition.columns.forEach(column => {
