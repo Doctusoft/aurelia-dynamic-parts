@@ -1,27 +1,29 @@
 declare module "aurelia-dynamic-parts" {
     import { ViewStrategy } from 'aurelia-framework';
     import { PropertyDescriptor } from 'typescript-rtti';
-    export interface PanelDefinition {
+    export interface PanelDefinition<T> {
         caption?: string;
-        items: PanelItemDefinition[];
+        items: PanelItemDefinition<T>[];
     }
-    export interface PanelItemDefinition {
+    export interface PanelItemDefinition<T> {
         caption: string;
         propertyName?: string;
         template?: string;
+        valueSupplier?: (panelData: T) => string;
     }
     export class DynamicPanel {
         viewStrategy: ViewStrategy;
-        panelDefinition: PanelDefinition;
+        panelDefinition: PanelDefinition<any>;
         panelData: any;
         outerController: any;
         bind(bindingContext: any, overrideContext: any): void;
     }
-    export class PanelDefinitionBuilder {
+    export class PanelDefinitionBuilder<T> {
         private tableDefinition;
         withPropertyItem(propertyDescriptor: PropertyDescriptor, caption: string): this;
+        withFunctionItem(valueSupplier: (panelData: T) => string, caption: string): this;
         withTemplateItem(template: string, caption: string): this;
-        build(): PanelDefinition;
+        build(): PanelDefinition<T>;
     }
     export interface TableDefinition {
         columns: ColumnDefinition[];

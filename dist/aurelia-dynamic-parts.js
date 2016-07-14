@@ -18,7 +18,7 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             if (this.panelDefinition.caption) {
                 template += '<div class="dynamic-panel-caption">' + this.panelDefinition.caption + '</div>';
             }
-            this.panelDefinition.items.forEach(function (item) {
+            this.panelDefinition.items.forEach(function (item, index) {
                 template +=
                     '<div class="dynamic-panel-item">' +
                         '  <div class="item-label">' + item.caption + '</div>';
@@ -27,6 +27,9 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
                 }
                 else if (item.template) {
                     template += '  <div class="item-value">' + item.template + '</div>';
+                }
+                else if (item.valueSupplier) {
+                    template += '  <div class="item-value">${panelDefinition.items[' + index + '].valueSuppier(panelData)}</div>';
                 }
                 else {
                     throw { error: 'Please define rendering for this item', item: item, panelDefinition: _this.panelDefinition };
@@ -63,6 +66,13 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
             this.tableDefinition.items.push({
                 caption: caption,
                 propertyName: propertyDescriptor.name
+            });
+            return this;
+        };
+        PanelDefinitionBuilder.prototype.withFunctionItem = function (valueSupplier, caption) {
+            this.tableDefinition.items.push({
+                caption: caption,
+                valueSupplier: valueSupplier
             });
             return this;
         };

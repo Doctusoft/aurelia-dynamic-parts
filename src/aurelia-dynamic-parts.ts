@@ -1,22 +1,23 @@
 import {bindable, inlineView, ViewStrategy, InlineViewStrategy} from 'aurelia-framework';
 import {PropertyDescriptor} from 'typescript-rtti';
 
-export interface PanelDefinition {
+export interface PanelDefinition<T> {
     caption?: string;
-    items: PanelItemDefinition[];
+    items: PanelItemDefinition<T>[];
 }
 
-export interface PanelItemDefinition {
+export interface PanelItemDefinition<T> {
     caption: string;
     propertyName?: string;
     template?: string;
+    valueSupplier?: (panelData: T) => string;
 }
 
 @inlineView('<template><compose view.bind="viewStrategy"></compose></template>')
 export class DynamicPanel {
     public viewStrategy: ViewStrategy;
 
-    @bindable panelDefinition: PanelDefinition;
+    @bindable panelDefinition: PanelDefinition<any>;
     @bindable panelData: any;
     @bindable outerController: any;
 
@@ -25,7 +26,7 @@ export class DynamicPanel {
         if (this.panelDefinition.caption) {
             template += '<div class="dynamic-panel-caption">' + this.panelDefinition.caption + '</div>';
         }
-        this.panelDefinition.items.forEach(item => {
+        this.panelDefinition.items.forEach((item, index) => {
             template +=
                 '<div class="dynamic-panel-item">' +
                 '  <div class="item-label">' + item.caption + '</div>';
@@ -33,6 +34,8 @@ export class DynamicPanel {
                 template += '  <div class="item-value">${panelData.' + item.propertyName + '}</div>';
             } else if (item.template) {
                 template += '  <div class="item-value">' + item.template + '</div>';
+            } else if (item.valueSupplier) {
+                template += '  <div class="item-value">${panelDefinition.items[' + index + '].valueSuppier(panelData)}</div>'; 
             } else {
                 throw {error: 'Please define rendering for this item', item: item, panelDefinition: this.panelDefinition};
             }
@@ -43,8 +46,8 @@ export class DynamicPanel {
     }
 }
 
-export class PanelDefinitionBuilder {
-	private tableDefinition : PanelDefinition = { items: []};
+export class PanelDefinitionBuilder<T> {
+	private tableDefinition : PanelDefinition<T> = { items: []};
 	public withPropertyItem(propertyDescriptor: PropertyDescriptor, caption: string) {
 		this.tableDefinition.items.push({
 			caption: caption,
@@ -52,6 +55,13 @@ export class PanelDefinitionBuilder {
 		});
 		return this;
 	}
+    public withFunctionItem(valueSupplier: (panelData: T)=> string, caption:string) {
+		this.tableDefinition.items.push({
+			caption: caption,
+			valueSupplier: valueSupplier
+		});
+        return this;
+    }
 	public withTemplateItem(template: string, caption: string) {
 		this.tableDefinition.items.push({
 			caption: caption,
@@ -59,7 +69,7 @@ export class PanelDefinitionBuilder {
 		});
 		return this;
 	}
-	public build(): PanelDefinition {
+	public build(): PanelDefinition<T> {
 		return this.tableDefinition;
 	}
 }
