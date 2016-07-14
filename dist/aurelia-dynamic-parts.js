@@ -74,7 +74,15 @@ define("aurelia-dynamic-parts", ["require", "exports", 'aurelia-framework'], fun
         PanelDefinitionBuilder.prototype.withFunctionItem = function (valueSupplier, caption) {
             this.tableDefinition.items.push({
                 caption: caption,
-                valueSupplier: valueSupplier
+                valueSupplier: function (panelData) {
+                    try {
+                        return valueSupplier(panelData);
+                    }
+                    catch (_) {
+                        // silently fall back to emptystring in case of an error
+                        return '';
+                    }
+                }
             });
             return this;
         };

@@ -60,7 +60,14 @@ export class PanelDefinitionBuilder<T> {
     public withFunctionItem(valueSupplier: (panelData: T)=> string, caption:string) {
 		this.tableDefinition.items.push({
 			caption: caption,
-			valueSupplier: valueSupplier
+			valueSupplier: (panelData: T) => {
+                try {
+                    return valueSupplier(panelData);
+                } catch (_) {
+                    // silently fall back to emptystring in case of an error
+                    return '';
+                }
+            }
 		});
         return this;
     }
