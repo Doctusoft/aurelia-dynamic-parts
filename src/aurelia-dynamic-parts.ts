@@ -35,9 +35,11 @@ export class DynamicPanel {
             } else if (item.template) {
                 template += '  <div class="item-value">' + item.template + '</div>';
             } else if (item.valueSupplier) {
-                template += '  <div class="item-value">${panelDefinition.items[' + index + '].valueSuppier(panelData)}</div>'; 
+                template += '  <div class="item-value">${panelDefinition.items[' + index + '].valueSupplier(panelData)}</div>'; 
             } else {
-                throw {error: 'Please define rendering for this item', item: item, panelDefinition: this.panelDefinition};
+                var e = {error: 'Please define rendering for this item', item: item, panelDefinition: this.panelDefinition};
+                console.error(e); // aurelia seems to swallow these errors
+                throw e;
             }
             template += '</div>';
         });
